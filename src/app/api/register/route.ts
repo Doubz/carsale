@@ -1,0 +1,44 @@
+import type { NextRequest } from "next/server";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+
+    const { name, email, phone } = body;
+
+    if (!name || !email || !phone) {
+      return Response.json(
+        { error: "所有字段都是必填的" },
+        { status: 400 },
+      );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return Response.json({ error: "邮箱格式不正确" }, { status: 400 });
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    console.log("Registration received:", { name, email, phone });
+
+    return Response.json(
+      {
+        success: true,
+        message: "注册成功",
+        data: {
+          name,
+          email,
+          phone,
+          timestamp: new Date().toISOString(),
+        },
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error("Error processing registration:", error);
+
+    return Response.json({ error: "服务器内部错误" }, { status: 500 });
+  }
+}
