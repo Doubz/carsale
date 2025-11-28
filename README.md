@@ -1,6 +1,12 @@
 ## 技术栈
 
-React Next Typescript TailwindCss FramerMotion googleMap
+React Next Typescript TailwindCss FramerMotion googleMap 
+
+## 页面介绍
+
+1.首页 包括注册 以及 footer
+2.Success page 注册成功后会跳转
+3.Contact Us Page：可以提交留言以及查看google map地图
 
 ## 主要特性
 
