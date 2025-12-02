@@ -7,6 +7,7 @@ const zhHant = {
     contact: "聯繫我們",
     registerNow: "立即註冊",
     brandName: "劉鑫的CarSale",
+    listing: "列表",
   },
 
   // Banner

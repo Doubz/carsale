@@ -126,6 +126,18 @@ export default function Navbar() {
               {t.nav.register}
             </Link>
 
+
+            <Link
+              href="/listing"
+              className={`font-medium transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-gray-200"
+              }`}
+            >
+              {t.nav.listing}
+            </Link>
+
             <Link
               href="/contact"
               className={`font-medium transition-colors ${
@@ -215,6 +227,15 @@ export default function Navbar() {
               onClick={(event) => handleNavClick(event, "register")}
             >
               {t.nav.register}
+            </Link>
+
+
+            <Link
+              href="/listing"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t.nav.listing}
             </Link>
 
             <Link

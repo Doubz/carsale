@@ -7,6 +7,7 @@ const en = {
     contact: "Contact Us",
     registerNow: "Register Now",
     brandName: "LiuXin CarSale",
+    listing: "Listing",
   },
 
   // Banner
