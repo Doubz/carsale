@@ -4,8 +4,11 @@ import { useState, useEffect, MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -80,7 +83,7 @@ export default function Navbar() {
               <span
                 className={`text-xl font-bold ${isScrolled ? "text-gray-900" : "text-white"}`}
               >
-                刘鑫的CarSale
+                {t.nav.brandName}
               </span>
             </motion.div>
           </Link>
@@ -96,7 +99,7 @@ export default function Navbar() {
               }`}
               onClick={(event) => handleNavClick(event, "banner")}
             >
-              首页
+              {t.nav.home}
             </Link>
 
             <Link
@@ -108,7 +111,7 @@ export default function Navbar() {
               }`}
               onClick={(event) => handleNavClick(event, "features")}
             >
-              车辆
+              {t.nav.vehicles}
             </Link>
 
             <Link
@@ -120,7 +123,7 @@ export default function Navbar() {
               }`}
               onClick={(event) => handleNavClick(event, "register")}
             >
-              注册
+              {t.nav.register}
             </Link>
 
             <Link
@@ -131,8 +134,10 @@ export default function Navbar() {
                   : "text-white hover:text-gray-200"
               }`}
             >
-              联系我们
+              {t.nav.contact}
             </Link>
+
+            <LanguageSwitcher isScrolled={isScrolled} />
 
             <Link
               href="/#register"
@@ -140,7 +145,7 @@ export default function Navbar() {
               aria-label="开始注册"
               onClick={(event) => handleNavClick(event, "register")}
             >
-              立即注册
+              {t.nav.registerNow}
             </Link>
           </div>
 
@@ -193,7 +198,7 @@ export default function Navbar() {
               className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
               onClick={(event) => handleNavClick(event, "banner")}
             >
-              首页
+              {t.nav.home}
             </Link>
 
             <Link
@@ -201,7 +206,7 @@ export default function Navbar() {
               className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
               onClick={(event) => handleNavClick(event, "features")}
             >
-              车辆
+              {t.nav.vehicles}
             </Link>
 
             <Link
@@ -209,7 +214,7 @@ export default function Navbar() {
               className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
               onClick={(event) => handleNavClick(event, "register")}
             >
-              注册
+              {t.nav.register}
             </Link>
 
             <Link
@@ -217,15 +222,19 @@ export default function Navbar() {
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              联系我们
+              {t.nav.contact}
             </Link>
+
+            <div className="px-4 py-2">
+              <LanguageSwitcher isScrolled={true} />
+            </div>
 
             <Link
               href="/#register"
               className="block w-full text-center bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold mt-2"
               onClick={(event) => handleNavClick(event, "register")}
             >
-              立即注册
+              {t.nav.registerNow}
             </Link>
           </div>
         </motion.div>

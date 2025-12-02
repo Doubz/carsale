@@ -6,6 +6,7 @@ import GoogleMap from "@/components/GoogleMap";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ContactFormData {
   name: string;
@@ -17,6 +18,7 @@ interface ContactFormData {
 type ContactFormErrors = Partial<Record<keyof ContactFormData, string>>;
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -36,32 +38,32 @@ export default function Contact() {
     const nextErrors: ContactFormErrors = {};
 
     if (!formData.name.trim()) {
-      nextErrors.name = "姓名为必填项";
+      nextErrors.name = t.contact.errors.nameRequired;
     } else if (formData.name.trim().length < 2) {
-      nextErrors.name = "姓名至少需要2个字符";
+      nextErrors.name = t.contact.errors.nameMin;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      nextErrors.email = "邮箱为必填项";
+      nextErrors.email = t.contact.errors.emailRequired;
     } else if (!emailRegex.test(formData.email)) {
-      nextErrors.email = "请输入有效的邮箱地址";
+      nextErrors.email = t.contact.errors.emailInvalid;
     }
 
     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
     if (!formData.phone.trim()) {
-      nextErrors.phone = "电话为必填项";
+      nextErrors.phone = t.contact.errors.phoneRequired;
     } else if (
       !phoneRegex.test(formData.phone) ||
       formData.phone.replace(/\D/g, "").length < 8
     ) {
-      nextErrors.phone = "请输入有效的电话号码";
+      nextErrors.phone = t.contact.errors.phoneInvalid;
     }
 
     if (!formData.message.trim()) {
-      nextErrors.message = "留言内容为必填项";
+      nextErrors.message = t.contact.errors.messageRequired;
     } else if (formData.message.trim().length < 10) {
-      nextErrors.message = "留言内容至少需要10个字符";
+      nextErrors.message = t.contact.errors.messageMin;
     }
 
     setErrors(nextErrors);
@@ -130,10 +132,10 @@ export default function Contact() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              联系我们
+              {t.contact.title}
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              参观我们的展厅或联系我们的团队
+              {t.contact.subtitle}
             </p>
           </motion.div>
 
@@ -154,7 +156,7 @@ export default function Contact() {
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/30 via-black/5 to-transparent" />
 
               <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-5 py-4 rounded-xl shadow-lg max-w-xs">
-                <p className="text-sm text-gray-500">展厅地址</p>
+                <p className="text-sm text-gray-500">{t.contact.showroomAddress}</p>
                 <p className="text-base md:text-lg font-semibold text-gray-900 leading-snug mt-1">
                   Tower B, Unit 1602-03
                   <br />83 King Lam St, Lai Chi Kok
@@ -167,7 +169,7 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="hidden sm:flex items-center gap-2 absolute top-6 right-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-gray-900 shadow-lg hover:bg-white"
               >
-                查看完整地图
+                {t.contact.viewFullMap}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -200,7 +202,7 @@ export default function Contact() {
               className="bg-white rounded-xl shadow-lg p-8"
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                展厅信息
+                {t.contact.showroomInfo}
               </h2>
 
               <div className="space-y-6">
@@ -229,7 +231,7 @@ export default function Contact() {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      地址
+                      {t.contact.address}
                     </h3>
                     <p className="text-gray-600 mt-1">
                       Tower B, Unit 1602-03
@@ -260,7 +262,7 @@ export default function Contact() {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      电话
+                      {t.contact.phone}
                     </h3>
                     <p className="text-gray-600 mt-1">+852 1234 5678</p>
                   </div>
@@ -285,7 +287,7 @@ export default function Contact() {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      邮箱
+                      {t.contact.email}
                     </h3>
                     <p className="text-gray-600 mt-1">test@test.com</p>
                   </div>
@@ -310,14 +312,14 @@ export default function Contact() {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      营业时间
+                      {t.contact.businessHours}
                     </h3>
                     <p className="text-gray-600 mt-1">
-                      周一 - 周五: 上午9:00 - 下午7:00
+                      {t.contact.businessHoursDetail.weekdays}
                       <br />
-                      周六: 上午10:00 - 下午6:00
+                      {t.contact.businessHoursDetail.saturday}
                       <br />
-                      周日: 休息
+                      {t.contact.businessHoursDetail.sunday}
                     </p>
                   </div>
                 </div>
@@ -331,7 +333,7 @@ export default function Contact() {
               className="bg-white rounded-xl shadow-lg p-8"
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                给我们留言
+                {t.contact.leaveMessage}
               </h2>
 
               <form className="space-y-4" onSubmit={handleSubmit} noValidate>
@@ -340,7 +342,7 @@ export default function Contact() {
                     htmlFor="contact-name"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    姓名
+                    {t.register.name}
                   </label>
                   <input
                     type="text"
@@ -365,7 +367,7 @@ export default function Contact() {
                     htmlFor="contact-email"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    邮箱
+                    {t.contact.email}
                   </label>
                   <input
                     type="email"
@@ -390,7 +392,7 @@ export default function Contact() {
                     htmlFor="contact-phone"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    电话
+                    {t.contact.phone}
                   </label>
                   <input
                     type="tel"
@@ -415,7 +417,7 @@ export default function Contact() {
                     htmlFor="message"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    留言内容
+                    {t.contact.message}
                   </label>
                   <textarea
                     id="message"
@@ -453,7 +455,7 @@ export default function Contact() {
                   disabled={isSubmitting}
                   className="w-full bg-primary hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
                 >
-                  {isSubmitting ? "提交中..." : "发送消息"}
+                  {isSubmitting ? t.contact.sending : t.contact.sendMessage}
                 </button>
               </form>
             </motion.div>

@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-gray-900 text-white py-12">
 
@@ -23,13 +28,13 @@ export default function Footer() {
             </div>
 
             <p className="text-gray-400 text-sm">
-              您可信赖的高端汽车销售伙伴。今天就驾驭您的梦想座驾。
+              {t.footer.tagline}
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-lg mb-4">
-              快捷链接
+              {t.footer.quickLinks}
             </h3>
 
             <ul className="space-y-2">
@@ -39,7 +44,7 @@ export default function Footer() {
                   href="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  首页
+                  {t.footer.home}
                 </Link>
               </li>
               <li>
@@ -47,7 +52,7 @@ export default function Footer() {
                   href="/#features"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  热门车辆
+                  {t.footer.popularVehicles}
                 </Link>
               </li>
               <li>
@@ -55,7 +60,7 @@ export default function Footer() {
                   href="/contact"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  联系我们
+                  {t.footer.contactUs}
                 </Link>
               </li>
               <li>
@@ -63,14 +68,14 @@ export default function Footer() {
                   href="/#register"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  立即注册
+                  {t.footer.registerNow}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">联系我们</h3>
+            <h3 className="font-semibold text-lg mb-4">{t.footer.contact}</h3>
 
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>Tower B, Unit 1602-03</li> {}
@@ -96,7 +101,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">关注我们</h3>
+            <h3 className="font-semibold text-lg mb-4">{t.footer.followUs}</h3>
 
             <div className="flex space-x-4">
 
@@ -150,7 +155,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 mt-8 text-center text-gray-400 text-sm">
 
           <p>
-            &copy; {new Date().getFullYear()} CarSale 活动。版权所有。
+            &copy; {new Date().getFullYear()} {t.footer.copyright}
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FormData {
   name: string;
@@ -20,6 +21,7 @@ interface FormErrors {
 
 export default function RegistrationForm() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const ref = useRef(null);
 
@@ -40,29 +42,29 @@ export default function RegistrationForm() {
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "姓名为必填项";
+      newErrors.name = t.register.errors.nameRequired;
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = "姓名至少需要2个字符";
+      newErrors.name = t.register.errors.nameMin;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!formData.email.trim()) {
-      newErrors.email = "邮箱为必填项";
+      newErrors.email = t.register.errors.emailRequired;
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "请输入有效的邮箱地址";
+      newErrors.email = t.register.errors.emailInvalid;
     }
 
     
     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
 
     if (!formData.phone.trim()) {
-      newErrors.phone = "电话号码为必填项";
+      newErrors.phone = t.register.errors.phoneRequired;
     } else if (
       !phoneRegex.test(formData.phone) ||
       formData.phone.replace(/\D/g, "").length < 8
     ) {
-      newErrors.phone = "请输入有效的电话号码";
+      newErrors.phone = t.register.errors.phoneInvalid;
     }
 
     setErrors(newErrors);
@@ -111,11 +113,11 @@ export default function RegistrationForm() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            注册您的意向
+            {t.register.title}
           </h2>
 
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            不要错过这个独家机会。立即注册，我们的团队将为您提供个性化优惠。
+            {t.register.subtitle}
           </p>
         </motion.div>
 
@@ -133,7 +135,7 @@ export default function RegistrationForm() {
                   htmlFor="name"
                   className="block text-sm font-semibold text-gray-700 mb-2"
                 >
-                  姓名 <span className="text-red-500">*</span>
+                  {t.register.name} <span className="text-red-500">*</span>
                 </label>
 
                 <input
@@ -145,7 +147,7 @@ export default function RegistrationForm() {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
                     errors.name ? "border-red-500" : "border-gray-300"
                   }`}
-                  placeholder="请输入您的姓名"
+                  placeholder={t.register.namePlaceholder}
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? "name-error" : undefined}
                 />
@@ -168,7 +170,7 @@ export default function RegistrationForm() {
                   htmlFor="email"
                   className="block text-sm font-semibold text-gray-700 mb-2"
                 >
-                  邮箱地址 <span className="text-red-500">*</span>
+                  {t.register.email} <span className="text-red-500">*</span>
                 </label>
 
                 <input
@@ -180,7 +182,7 @@ export default function RegistrationForm() {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   }`}
-                  placeholder="your.email@example.com"
+                  placeholder={t.register.emailPlaceholder}
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "email-error" : undefined}
                 />
@@ -203,7 +205,7 @@ export default function RegistrationForm() {
                   htmlFor="phone"
                   className="block text-sm font-semibold text-gray-700 mb-2"
                 >
-                  电话号码 <span className="text-red-500">*</span>
+                  {t.register.phone} <span className="text-red-500">*</span>
                 </label>
 
                 <input
@@ -215,7 +217,7 @@ export default function RegistrationForm() {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
                     errors.phone ? "border-red-500" : "border-gray-300"
                   }`}
-                  placeholder="+852 1234 5678"
+                  placeholder={t.register.phonePlaceholder}
                   aria-invalid={!!errors.phone}
                   aria-describedby={errors.phone ? "phone-error" : undefined}
                 />
@@ -267,15 +269,15 @@ export default function RegistrationForm() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    处理中...
+                    {t.register.submitting}
                   </span>
                 ) : (
-                  "提交注册"
+                  t.register.submit
                 )}
               </motion.button>
 
               <p className="text-sm text-gray-500 text-center mt-4">
-                提交此表单即表示您同意我们的服务条款和隐私政策。
+                {t.register.disclaimer}
               </p>
             </form>
           </div>

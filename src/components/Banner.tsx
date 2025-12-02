@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Banner() {
+  const { t } = useLanguage();
   const scrollToRegister = () => {
     const element = document.getElementById("register");
     if (element) {
@@ -35,7 +37,7 @@ export default function Banner() {
             className="inline-block mb-6"
           >
             <span className="bg-white bg-opacity-20 text-white px-6 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
-              首批到店 · 全新旗舰车型限量开售
+              {t.banner.badge}
             </span>
           </motion.div>
 
@@ -45,9 +47,9 @@ export default function Banner() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
           >
-            全新旗舰车系到店
+            {t.banner.title}
             <br /> {}
-            <span className="text-yellow-400">尊享经销商专属礼遇</span>
+            <span className="text-yellow-400">{t.banner.titleHighlight}</span>
           </motion.h1>
 
           <motion.p
@@ -56,8 +58,7 @@ export default function Banner() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto"
           >
-            厂家授权经销网络，首批到店现车同步全国。金融、置换与终身保养
-            方案一站打包，预约即可锁定限量交车礼遇。
+            {t.banner.subtitle}
           </motion.p>
 
           <motion.div
@@ -71,7 +72,7 @@ export default function Banner() {
               className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-yellow-400/50 hover:scale-105 w-full sm:w-auto"
               aria-label="预约试驾"
             >
-              预约试驾
+              {t.banner.testDrive}
             </button>
 
             <button
@@ -82,7 +83,7 @@ export default function Banner() {
               className="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 backdrop-blur-sm border-2 border-white border-opacity-30 w-full sm:w-auto"
               aria-label="查看库存"
             >
-              查看库存
+              {t.banner.viewInventory}
             </button>
           </motion.div>
         </motion.div>
@@ -94,10 +95,10 @@ export default function Banner() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
         >
           {[
-            { label: "60+", desc: "全新上市车型" },
-            { label: "5年", desc: "厂家质保支持" },
-            { label: "48h", desc: "极速交付承诺" },
-            { label: "400+", desc: "认证销售顾问" },
+            { label: t.banner.stats.models, desc: t.banner.stats.modelsDesc },
+            { label: t.banner.stats.warranty, desc: t.banner.stats.warrantyDesc },
+            { label: t.banner.stats.delivery, desc: t.banner.stats.deliveryDesc },
+            { label: t.banner.stats.consultants, desc: t.banner.stats.consultantsDesc },
           ].map((stat, index) => (
             <motion.div
               key={index}

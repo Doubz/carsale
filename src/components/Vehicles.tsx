@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const categories = ["SUV", "轿车", "跑车"];
+const categories = ["SUV", "sedan", "sports"] as const;
+
+type CategoryKey = (typeof categories)[number];
 
 const vehicles = [
   {
@@ -57,10 +60,12 @@ function VehicleCard({
   vehicle,
   index,
   isFirst,
+  t,
 }: {
   vehicle: (typeof vehicles)[0];
   index: number;
   isFirst: boolean;
+  t: ReturnType<typeof useLanguage>["t"];
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -78,12 +83,12 @@ function VehicleCard({
       >
         <div>
           <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            {vehicle.tag}
+            {t.vehicles.newVehicle}
           </h3>
-          <p className="text-gray-600 mb-6">{vehicle.subtitle}</p>
+          <p className="text-gray-600 mb-6">{t.vehicles.newVehicleSubtitle}</p>
         </div>
         <button className="text-left font-semibold text-gray-900 hover:text-primary transition-colors">
-          {vehicle.cta}
+          {t.vehicles.shopNow}
         </button>
       </motion.div>
     );
@@ -110,7 +115,7 @@ function VehicleCard({
           {vehicle.name}
         </h3>
         <button className="font-semibold text-gray-900 hover:text-primary transition-colors">
-          立即选购
+          {t.vehicles.shopNow}
         </button>
       </div>
     </motion.div>
@@ -120,7 +125,14 @@ function VehicleCard({
 export default function Vehicles() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [selectedCategory, setSelectedCategory] = useState("SUV");
+  const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("SUV");
+  const { t } = useLanguage();
+
+  const categoryLabels: Record<CategoryKey, string> = {
+    SUV: t.vehicles.categories.suv,
+    sedan: t.vehicles.categories.sedan,
+    sports: t.vehicles.categories.sports,
+  };
 
   return (
     <section id="features" className="py-20 bg-white">
@@ -132,7 +144,7 @@ export default function Vehicles() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-8">热门车辆</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">{t.vehicles.title}</h2>
 
           <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
             {categories.map((category) => (
@@ -145,7 +157,7 @@ export default function Vehicles() {
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
-                {category}
+                {categoryLabels[category]}
               </button>
             ))}
           </div>
@@ -158,6 +170,7 @@ export default function Vehicles() {
               vehicle={vehicle}
               index={index}
               isFirst={index === 0}
+              t={t}
             />
           ))}
         </div>

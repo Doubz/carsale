@@ -6,7 +6,11 @@ import Link from "next/link";
 
 import { motion } from "framer-motion";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export default function Success() {
+  const { t } = useLanguage();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -51,7 +55,7 @@ export default function Success() {
           transition={{ delay: 0.3 }}
           className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
         >
-          注册成功！
+          {t.success.title}
         </motion.h1>
 
         <motion.div
@@ -64,7 +68,7 @@ export default function Success() {
             className="inline-block bg-primary hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
             aria-label="返回首页"
           >
-            返回首页
+            {t.success.backHome}
           </Link>
         </motion.div>
       </motion.div>
